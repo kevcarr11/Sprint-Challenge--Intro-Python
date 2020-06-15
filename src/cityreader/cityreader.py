@@ -9,7 +9,10 @@ class City:
         self.lon = lon
 
     def __str__(self):
-        return f'{self.name}, {self.lat}, {self.lon}'
+        return f'{self.name}, {self.lat},{self.lon}'
+
+    def __repr__(self):
+        return f'{self.name}, {self.lat},{self.lon}'
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
 #
@@ -30,12 +33,10 @@ def cityreader(cities=[]):
   # `cities` list
     with open('cities.csv') as csvfile:
         city_list = [{key: value for key, value, in row.items()}
-            for row in csv.DictReader(csvfile, skipinitialspace=True)]
+            for row in csv.DictReader(csvfile)]
 
         for city_info in city_list:
-            city = City(city_info['city'], city_info['lat'], city_info['lng'])
-            cities.append(city)
-            
+            cities.append(City(city_info['city'], float(city_info['lat']), float(city_info['lng'])))
     return cities
 
 cityreader(cities)
